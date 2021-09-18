@@ -1,28 +1,49 @@
 <template>
-  <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
-  </div>
+  <section id="app">
+    <SearchBox />
+    <ul class="profiles">
+      <ProfileCard v-for="(profile, id) in profiles" v-bind="profile" :key="id" />
+    </ul>
+  </section>
 </template>
 
 <script>
-import HelloWorld from './components/HelloWorld.vue'
+import SearchBox from './components/SearchBox.vue'
+import ProfileCard from './components/ProfileCard.vue'
 
 export default {
   name: 'App',
   components: {
-    HelloWorld
-  }
+    SearchBox,
+    ProfileCard
+  },
+  data() {
+    return {
+      profiles: []
+    }
+  },
+  mounted() {
+    fetch('https://gist.githubusercontent.com/allaud/093aa499998b7843bb10b44ea6ea02dc/raw/c400744999bf4b308f67807729a6635ced0c8644/users.json')
+      .then(response => response.json())
+      .then(json => this.profiles = json)
+      .then(() => console.log('profiles then', this.profiles))
+  },
 }
 </script>
 
-<style>
+<style scoped>
 #app {
-  font-family: Avenir, Helvetica, Arial, sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
-  text-align: center;
-  color: #2c3e50;
-  margin-top: 60px;
+  background-color: #fff;
+  width: 95%;
+  max-width: 564px;
+  height: 643px;
+  overflow-y: scroll;
+  padding: 20px 12px 0;
+}
+
+.profiles {
+  padding: 0;
+  margin: 0;
+  list-style: none; 
 }
 </style>
