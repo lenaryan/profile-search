@@ -47,3 +47,8 @@ export default {
   list-style: none; 
 }
 </style>
+
+
+// TODO: 
+// 1. Separate data to not hang up a browser
+// 2. Finish moking up
